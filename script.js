@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         try {
-            const response = await fetch('http://localhost/expenses/api/v1/data', {
+            const response = await fetch('https://practice.mchaexpress.com/expense-tracker/api/v1/data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchExpenses() {
         try {
-            const response = await fetch('http://localhost/expenses/api/v1/data'); 
+            const response = await fetch('https://practice.mchaexpress.com/expense-tracker/api/v1/data'); 
             const data = await response.json();
             
             if (data.status === 'success') {
