@@ -77,15 +77,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     async function fetchExpenses() {
-        try {
-            const response = await fetch('https://gecowebdev-expense-tracker.netlify.app/expenses/api/v1/data'); 
+    try {
+        const response = await fetch('https://gecowebdev-expense-tracker.netlify.app/expenses/api/v1/data');
+        
+        if (!response.ok) {
+            console.error(`Server Error: ${response.status}`);
+            return;
+        }
+        
+        // Check if the response content-type is JSON
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
             const data = await response.json();
             
             if (data.status === 'success') {
                 const { total_price, data: expenses } = data;
-    
                 totalPriceElement.textContent = `$${parseFloat(total_price).toFixed(2)}`;
-    
                 expenseList.innerHTML = expenses.map(exp => `
                     <li class="expense-item">
                         <span class="item-name">${exp.things}</span>
@@ -93,15 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button id="delete-item" class="delete-item" data-expense-id="${exp.id}"><i class="fa-solid fa-xmark"></i></button>
                     </li>
                 `).join('');
-                
                 attachDeleteListeners();
             } else {
                 console.error('Error:', data.message);
             }
-        } catch (error) {
-            console.error('Error fetching expenses:', error);
+        } else {
+            console.error("Unexpected response format");
         }
+    } catch (error) {
+        console.error('Error fetching expenses:', error);
     }
+}
 
     function attachDeleteListeners() {
         const deleteButtons = document.querySelectorAll('.delete-item');
