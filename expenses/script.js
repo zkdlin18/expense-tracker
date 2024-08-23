@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         try {
-            const response = await fetch('http://localhost/expenses/api/v1/data', {
+            const response = await fetch('http://gecowebdev-expense-tracker.infinityfreeapp.com/expenses/api/v1/data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchExpenses() {
         try {
-            const response = await fetch('http://localhost/expenses/api/v1/data'); 
+            const response = await fetch('http://gecowebdev-expense-tracker.infinityfreeapp.com/expenses/api/v1/data'); 
             const data = await response.json();
             
             if (data.status === 'success') {
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', async () => {
                 const expenseId = button.getAttribute('data-expense-id');
                 try {
-                    const deleteResponse = await fetch(`http://localhost/expenses/api/v1/data?id=${expenseId}`, {
+                    const deleteResponse = await fetch(`http://gecowebdev-expense-tracker.infinityfreeapp.com/expenses/api/v1/data?id=${expenseId}`, {
                         method: 'DELETE'
                     });
 
