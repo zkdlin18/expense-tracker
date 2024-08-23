@@ -1,9 +1,9 @@
 <?php
 // Database configuration
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
-define('DB_NAME', 'expense_tracker');
+define('DB_HOST', 'sql110.infinityfree.com');
+define('DB_USER', 'if0_37163279');
+define('DB_PASSWORD', 'ViO83vawqZKRiQo');
+define('DB_NAME', 'if0_37163279_expense_tracker');
 
 // Create connection
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
