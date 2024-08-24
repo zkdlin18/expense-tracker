@@ -80,15 +80,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     async function fetchExpenses() {
-        try {
-            const response = await fetch('https://gecowebdev-expense-tracker.netlify.app/expenses/api/v1/data'); 
+    try {
+        const response = await fetch('https://gecowebdev-expense-tracker.netlify.app/expenses/api/v1/data');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const contentType = response.headers.get('Content-Type');
+        
+        if (contentType && contentType.includes('application/json')) {
             const data = await response.json();
             
             if (data.status === 'success') {
                 const { total_price, data: expenses } = data;
-    
+                
                 totalPriceElement.textContent = `$${parseFloat(total_price).toFixed(2)}`;
-    
+                
                 expenseList.innerHTML = expenses.map(exp => `
                     <li class="expense-item">
                         <span class="item-name">${exp.things}</span>
@@ -101,10 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 console.error('Error:', data.message);
             }
-        } catch (error) {
-            console.error('Error fetching expenses:', error);
+        } else {
+            const text = await response.text();
+            console.error('Response was not JSON:', text);
         }
+    } catch (error) {
+        console.error('Error fetching expenses:', error);
     }
+}
+
 
     function attachDeleteListeners() {
         const deleteButtons = document.querySelectorAll('.delete-item');
